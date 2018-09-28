@@ -1,0 +1,42 @@
+---
+
+###
+# SOLR
+###
+
+# Sources
+solr_version: 7.5.0
+solr_source_mirror: "http://apache.forsale.plus/"
+solr_source_url: "{{ solr_source_mirror }}/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz"
+solr_source_path: /opt
+
+# Installation
+solr_install_path: /opt
+
+# User
+solr_user: solr
+
+# Home folder
+solr_home: "/var/{{ solr_service_name }}"
+
+# Port
+solr_port: 8983
+
+# Logs
+solr_log_path: /var/log/solr
+solr_log_level: WARN
+
+# Service
+solr_service_name: solr
+
+###
+# JVM
+###
+
+# Heap memory
+solar_jvm_heap: "-Xms512m -Xmx512m"
+
+# Configuration
+solr_host: "{{ inventory_hostname }}"
+solr_timezone: UTC
+solr_enable_docs: false

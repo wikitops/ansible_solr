@@ -1,0 +1,19 @@
+---
+
+- name: SOLR | Manage users
+  import_tasks: users.yml
+  tags: update-solr-user
+
+- name: SOLR | Check installation
+  stat:
+    path: "{{ solr_install_path }}/solr//bin/solr"
+  register: solr_is_installed
+
+- name: SOLR | Manage installation
+  import_tasks: install.yml
+  when: solr_is_installed.stat.isreg is not defined
+  tags: update-solr-install
+
+- name: SOLR | Manage configuration
+  import_tasks: config.yml
+  tags: update-solr-config

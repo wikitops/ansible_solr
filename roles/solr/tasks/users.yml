@@ -1,0 +1,12 @@
+---
+
+- name: SOLR USERS | Add group
+  group:
+    name: "{{ solr_user }}"
+    state: present
+
+- name: SOLR USERS | Add user
+  user:
+    name: "{{ solr_user }}"
+    groups: "{{ solr_user }}"
+    append: yes

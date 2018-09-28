@@ -1,0 +1,17 @@
+---
+
+- name: SOLR CONFIG | Configuration
+  template:
+    src: etc/default/solr.in.sh.j2
+    dest: /etc/default/solr.in.sh
+    owner: root
+    group: root
+    mode: 0640
+
+- name: SOLR CONFIG | Link logs folder
+  file:
+    src: "{{ solr_home }}/logs"
+    dest: "{{ solr_log_path }}"
+    owner: "{{ solr_user }}"
+    group: "{{ solr_user }}"
+    state: link

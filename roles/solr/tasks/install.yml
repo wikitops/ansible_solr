@@ -1,0 +1,31 @@
+---
+
+- name: SOLR | Download sources (this may take some time)
+  get_url:
+    url: "{{ solr_source_url }}"
+    dest: "{{ solr_source_path }}"
+  tags: update-solr
+
+- name: SOLR | Unarchive sources
+  unarchive:
+    src: "{{ solr_source_path }}/solr-{{ solr_version }}.tgz"
+    dest: "{{ solr_source_path }}"
+    remote_src: yes
+  notify: Clean downloads
+  tags: update-solr
+
+- name: SOLR | Run install script
+  shell: >
+    {{ solr_source_path }}/solr-{{ solr_version }}/bin/install_solr_service.sh
+    {{ solr_source_path }}/solr-{{ solr_version }}.tgz
+    -i {{ solr_install_path }}
+    -d {{ solr_home }}
+    -u {{ solr_user }}
+    -s {{ solr_service_name }}
+    -p {{ solr_port }}
+  args:
+    creates: "{{ solr_install_path }}/bin/solr"
+  notify:
+    - Restart solr
+    - Clean docs and examples
+  tags: update-solr
